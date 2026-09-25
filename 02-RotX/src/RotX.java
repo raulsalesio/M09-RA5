@@ -14,42 +14,89 @@ public class RotX {
 
         
     }
-    public static String xifraRotX(String cadena, int desplaçament) {
-        
-        String resultat = "";
+        public static String xifraRotX(String cadena, int desplaçament) {
+            
+            String resultat = "";
 
-        for (int i = 0; i < cadena.length(); i++) {
+            for (int i = 0; i < cadena.length(); i++) {
 
-            char lletra = cadena.charAt(i);
+                char lletra = cadena.charAt(i);
 
-            for (int j = 0; j < majuscules.length; j++) {
-                if (majuscules[j] == lletra) {
-                    int novaPosicio = (j + desplaçament) % majuscules.length;
-                    lletra = majuscules[novaPosicio];
-                    break;
+                for (int j = 0; j < majuscules.length; j++) {
+                    if (majuscules[j] == lletra) {
+                        int novaPosicio = (j + desplaçament) % majuscules.length;
+                        lletra = majuscules[novaPosicio];
+                        break;
+                    }
                 }
+
+                for (int j = 0; j < minuscules.length; j++) {
+                    if (minuscules[j] == lletra) {
+                        int novaPosicio = (j + desplaçament) % minuscules.length;
+                        lletra = minuscules[novaPosicio];
+                        break;
+                    }
+                }
+
+                resultat += lletra;
             }
 
-            for (int j = 0; j < minuscules.length; j++) {
-                if (minuscules[j] == lletra) {
-                    int novaPosicio = (j + desplaçament) % minuscules.length;
-                    lletra = minuscules[novaPosicio];
-                    break;
-                }
-            }
-
-            resultat += lletra;
-        }
-
-        return resultat;
+            return resultat;
     }
 
 
-    // public static String desxifraRotX(String cadena, int desplaçament) {
+    public static String desxifraRotX(String cadena, int desplaçament) {
 
-    // }
+    String resultat = "";
 
-    // public static String forcaBruta(String cadenaXifrada) {
+    for (int i = 0; i < cadena.length(); i++) {
 
-    // }
-}
+        char lletra = cadena.charAt(i);
+
+        // Busquem la lletra entre les majúscules
+        for (int j = 0; j < majuscules.length; j++) {
+
+            if (majuscules[j] == lletra) {
+
+                int novaPosicio =
+                        (j - desplaçament + majuscules.length)
+                        % majuscules.length;
+
+                lletra = majuscules[novaPosicio];
+
+                break;
+            }
+        }
+
+        // Busquem la lletra entre les minúscules
+        for (int j = 0; j < minuscules.length; j++) {
+
+            if (minuscules[j] == lletra) {
+
+                int novaPosicio =
+                        (j - desplaçament + minuscules.length)
+                        % minuscules.length;
+
+                lletra = minuscules[novaPosicio];
+
+                break;
+            }
+        }
+
+        resultat += lletra;
+    }
+
+    return resultat;
+
+    }
+
+    public static void forcaBrutaRotX(String cadenaXifrada) {
+
+        for (int desplaçament = 0; desplaçament < majuscules.length; desplaçament++) {
+
+            String resultat = desxifraRotX(cadenaXifrada, desplaçament);
+            System.out.printf("(%d)->%s%n", desplaçament, resultat);
+        }
+    }
+} 
+    
