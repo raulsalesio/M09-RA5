@@ -12,8 +12,35 @@ public class RotX {
         System.out.println("\nXifrat");
         System.out.println("------");
 
-        
+        // for recorrent totes les paraules
+         for (int i = 0; i < msgs.length; i++) {
+
+            int desplaçament = i * 2;
+
+            msgsXifrats[i] = xifraRotX(msgs[i], desplaçament);
+
+            System.out.printf("(%d)-%-21s => %s%n", desplaçament, msgs[i], msgsXifrats[i]);
+        }
+
+        System.out.println("\nDesxifrat");
+        System.out.println("---------");
+
+        for (int i = 0; i < msgsXifrats.length; i++) {
+
+            int desplaçament = i * 2;
+
+            System.out.printf("(%d)-%-21s => %s%n", desplaçament, msgsXifrats[i], desxifraRotX(msgsXifrats[i], desplaçament));
+        }
+
+        System.out.println("\nForça bruta");
+        System.out.println("-----------");
+
+        String missatgeXifrat = xifraRotX("Perdó, per tu què és?", 6);
+        System.out.println("Missatge xifrat: " + missatgeXifrat);
+
+        forcaBrutaRotX(missatgeXifrat);
     }
+
         public static String xifraRotX(String cadena, int desplaçament) {
             
             String resultat = "";
