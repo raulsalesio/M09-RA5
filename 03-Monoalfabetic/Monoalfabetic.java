@@ -30,9 +30,9 @@ public class Monoalfabetic {
 
         for (int i = 0; i < cadena.length(); i++) {
             char lletraOriginal = cadena.charAt(i);
-            boolean esMinuscula = Character.isLowerCase(cadena);
+            boolean esMinuscula = Character.isLowerCase(lletraOriginal);
             
-            char lletraMajuscula = Character.toUpperCase(cadena);
+            char lletraMajuscula = Character.toUpperCase(lletraOriginal);
             char lletraXifrada = lletraOriginal;
 
             for (int j = 0; j < alfabet.length; j++) {
@@ -82,5 +82,45 @@ public class Monoalfabetic {
         }
 
         return resultat;
+    }
+
+    public static void main(String[] args) {
+        alfabetPermutat = new String(permutaAlfabet(alfabet));
+
+        System.out.println("Alfabet original:");
+        for (int i = 0; i < alfabet.length; i++) {
+            System.out.print(alfabet[i] + " ");
+        }
+
+        System.out.println();
+
+        System.out.println("Alfabet permutat:");
+        for (int i = 0; i < alfabetPermutat.length(); i++) {
+            System.out.print(alfabetPermutat.charAt(i) + " ");
+        }
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println("Xifratge:");
+
+        String test01 = "Test 01 àrbitre, coixí, Perímetre";
+        String test02 = "Test 02 Taüll, DÍA, año";
+        String test03 = "Test 03 Peça, Òrrius, Bòvila";
+
+        String xifrat01 = xifraMonoAlfa(test01);
+        String xifrat02 = xifraMonoAlfa(test02);
+        String xifrat03 = xifraMonoAlfa(test03);
+
+        System.out.println(test01 + " -> " + xifrat01);
+        System.out.println(test02 + " -> " + xifrat02);
+        System.out.println(test03 + " -> " + xifrat03);
+
+        System.out.println();
+        System.out.println("Desxifratge:");
+
+        System.out.println(xifrat01 + " -> " + desxifraMonoAlfa(xifrat01));
+        System.out.println(xifrat02 + " -> " + desxifraMonoAlfa(xifrat02));
+        System.out.println(xifrat03 + " -> " + desxifraMonoAlfa(xifrat03));
     }
 }
