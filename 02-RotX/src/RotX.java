@@ -16,9 +16,7 @@ public class RotX {
          for (int i = 0; i < msgs.length; i++) {
 
             int desplaçament = i * 2;
-
             msgsXifrats[i] = xifraRotX(msgs[i], desplaçament);
-
             System.out.printf("(%d)-%-21s => %s%n", desplaçament, msgs[i], msgsXifrats[i]);
         }
 
@@ -28,7 +26,6 @@ public class RotX {
         for (int i = 0; i < msgsXifrats.length; i++) {
 
             int desplaçament = i * 2;
-
             System.out.printf("(%d)-%-21s => %s%n", desplaçament, msgsXifrats[i], desxifraRotX(msgsXifrats[i], desplaçament));
         }
 
@@ -100,10 +97,7 @@ public class RotX {
 
             if (minuscules[j] == lletra) {
 
-                int novaPosicio =
-                        (j - desplaçament + minuscules.length)
-                        % minuscules.length;
-
+                int novaPosicio = (j - desplaçament + minuscules.length) % minuscules.length;
                 lletra = minuscules[novaPosicio];
 
                 break;
