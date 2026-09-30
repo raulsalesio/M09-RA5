@@ -52,4 +52,35 @@ public class Monoalfabetic {
 
         return resultat;
     }
+
+    public static String desxifraMonoAlfa(String cadena) {
+
+        String resultat = "";
+
+        for (int i = 0; i < cadena.length(); i++) {
+
+            char lletra = cadena.charAt(i);
+            boolean trobada = false;
+
+            for (int j = 0; j < alfabetPermutat.length(); j++) {
+
+                if (alfabetPermutat.charAt(j) == Character.toUpperCase(lletra)) {
+                    char lletraDesxifrada = alfabet[j];
+
+                    if (Character.isLowerCase(lletra)) {
+                        lletraDesxifrada = Character.toLowerCase(lletraDesxifrada);
+                    }
+
+                    resultat += lletraDesxifrada;
+                    trobada = true;
+                    break;
+                }
+            }
+            if (!trobada) {
+                resultat += lletra;
+            }
+        }
+
+        return resultat;
+    }
 }
