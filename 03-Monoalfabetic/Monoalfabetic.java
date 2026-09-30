@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Random;
 
 public class Monoalfabetic {
 
@@ -14,7 +14,15 @@ public class Monoalfabetic {
             lista.add(alfabet[i]);
         }
 
-        Collections.shuffle(lista);
+        Random random = new Random();
+
+        for (int i = 0; i < lista.size(); i++) {
+            int posicio = random.nextInt(lista.size());
+
+            Character temporal = lista.get(i);
+            lista.set(i, lista.get(posicio));
+            lista.set(posicio, temporal);
+        }
 
         char[] resultat = new char[lista.size()];
 
@@ -46,7 +54,6 @@ public class Monoalfabetic {
                     break;
                 }
             }
-
             resultat += lletraXifrada;
         }
 
