@@ -63,6 +63,23 @@ public class Polialfabetic {
 
             permutaAlfabet();
 
+            for (int j = 0; j < alfabetPermutat.length; j++) {
+                if (alfabetPermutat[j] == lletraMajuscula) {
+                    char lletraDesxifrada = alfabet[j];
+                    if (esMinuscula) {
+                        lletraOriginal = Character.toLowerCase(lletraDesxifrada);
+                    } else {
+                        lletraOriginal = lletraDesxifrada;
+                    }
+                    break;
+                }
+            }
+
+            resultat.append(lletraOriginal);
+        }
+
+        return resultat.toString();
+    }
 
     public static void main(String[] args) {
         String msgs[] = {
