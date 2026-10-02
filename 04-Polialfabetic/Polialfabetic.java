@@ -27,19 +27,21 @@ public class Polialfabetic {
         }
     }
 
-    public static String xifraMonoAlfa(String cadena) {
-        String resultat = "";
 
-        for (int i = 0; i < cadena.length(); i++) {
-            char lletraOriginal = cadena.charAt(i);
+    public static String xifraMonoAlfa(String msg) {
+        StringBuilder resultat = new StringBuilder();
+
+        for (int i = 0; i < msg.length(); i++) {
+            char lletraOriginal = msg.charAt(i);
             boolean esMinuscula = Character.isLowerCase(lletraOriginal);
-            
             char lletraMajuscula = Character.toUpperCase(lletraOriginal);
             char lletraXifrada = lletraOriginal;
 
+            permutaAlfabet();
+
             for (int j = 0; j < alfabet.length; j++) {
                 if (alfabet[j] == lletraMajuscula) {
-                    char lletraPermutada = alfabetPermutat.charAt(j);
+                    char lletraPermutada = alfabetPermutat[j];
                     if (esMinuscula) {
                         lletraXifrada = Character.toLowerCase(lletraPermutada);
                     } else {
@@ -48,11 +50,19 @@ public class Polialfabetic {
                     break;
                 }
             }
-            resultat += resultat + lletraXifrada;
+
+            resultat.append(lletraXifrada);
         }
-        return resultat;
+
+        return resultat.toString();
     }
-    
+
+
+    public static String desxifraPoliAlfa(String msgXifrat) {
+        String resultat = "";
+
+                
+    }
 
     public static void main(String[] args) {
     String msgs[] = {"Test 01 àrbitre, coixí, Perímetre",
