@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+
 public class Polialfabetic {
 
     private static final char[] alfabet = "AÀÁBCÇDEÉÈFGHIÍÌÏJKLMNÑOÓÒPQRSTUÚÙÜVWXYZ".toCharArray();
@@ -22,6 +26,33 @@ public class Polialfabetic {
             alfabetPermutat[i] = llista.get(i);
         }
     }
+
+    public static String xifraMonoAlfa(String cadena) {
+        String resultat = "";
+
+        for (int i = 0; i < cadena.length(); i++) {
+            char lletraOriginal = cadena.charAt(i);
+            boolean esMinuscula = Character.isLowerCase(lletraOriginal);
+            
+            char lletraMajuscula = Character.toUpperCase(lletraOriginal);
+            char lletraXifrada = lletraOriginal;
+
+            for (int j = 0; j < alfabet.length; j++) {
+                if (alfabet[j] == lletraMajuscula) {
+                    char lletraPermutada = alfabetPermutat.charAt(j);
+                    if (esMinuscula) {
+                        lletraXifrada = Character.toLowerCase(lletraPermutada);
+                    } else {
+                        lletraXifrada = lletraPermutada;
+                    }
+                    break;
+                }
+            }
+            resultat += resultat + lletraXifrada;
+        }
+        return resultat;
+    }
+    
 
     public static void main(String[] args) {
     String msgs[] = {"Test 01 àrbitre, coixí, Perímetre",
