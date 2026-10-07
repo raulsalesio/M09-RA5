@@ -1,8 +1,15 @@
 public class AES {
-    
+    public static final String ALGORISME_XIFRAT = "AES";
+    public static final String ALGORISME_HASH = "SHA-256";
+    public static final String FORMAT_AES = "AES/CBC/PKCS5Padding";
+
+    public static final int MIDA_IV = 16;
+    public static byte[] iv = new byte[MIDA_IV];
+    private static final String CLAU = "LaClauSecretaQueVulguis";
 
     public static byte[] xifraAES(String msg, String clau) throws Exception {
         // Obtenir els bytes de l'String
+        
         // Genera IvParameterSpec
         // Genera hash
         // Encrypt
