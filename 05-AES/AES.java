@@ -65,16 +65,25 @@ public class AES {
         return resultat;
     }
 
+
     public static String desxifraAES(byte[] bIvIMsgXifrat, String clau) throws Exception {
-        // Extreure l'IV
+         // Extreure l'IV
+        byte[] bytesIv = extreureIv(bIvIMsgXifrat);
 
         // Extreure la part xifrada
+        byte[] msgXifrat = getBytesXifrats(bIvIMsgXifrat);
 
         // Fer hash de la clau
+        SecretKeySpec secretKey = generaHash(clau);
 
         // Desxifrar
+        IvParameterSpec ivSpec = new IvParameterSpec(bytesIv);
+        Cipher cipher = Cipher.getInstance(FORMAT_AES);
+        cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec);
+        byte[] msgDesxifrat = cipher.doFinal(msgXifrat);
 
-        // return String desxifrats
+        // return String desxifrat
+        return new String(msgDesxifrat, StandardCharsets.UTF_8);
     }
     public static void main(String[] args) {
         String msgs[] = {"Lorem ipsum dicet", "Hola Andrés cómo está tu cuñado", "Àgora illa Ôtto"};
@@ -94,7 +103,7 @@ public class AES {
         
             System.out.println("---------------------");
             System.out.println("Msg: " + msg);
-            System.out.println("Enc: " + new String(bXifrats));
+            System.out.println("Enc: " + new String(bXifrats, StandardCharsets.UTF_8));
             System.out.println("DEC: " + desxifrat);
         }
     }
