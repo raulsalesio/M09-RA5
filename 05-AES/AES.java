@@ -1,6 +1,7 @@
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
+import java.util.Arrays;
 
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -30,6 +31,14 @@ public class AES {
         random.nextBytes(iv);
         return new IvParameterSpec(iv);
     }
+
+    private static byte[] extreureIv(byte[] bIvIMsgXifrat) {
+        return Arrays.copyOfRange(bIvIMsgXifrat, 0, MIDA_IV);
+}
+
+    private static byte[] getBytesXifrats(byte[] bIvIMsgXifrat) {
+        return Arrays.copyOfRange(bIvIMsgXifrat, MIDA_IV, bIvIMsgXifrat.length);
+}
 
     public static byte[] xifraAES(String msg, String clau) throws Exception {
         // Obtenir els bytes de l'String
