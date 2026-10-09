@@ -3,6 +3,7 @@ import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
+import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -42,16 +43,26 @@ public class AES {
 
     public static byte[] xifraAES(String msg, String clau) throws Exception {
         // Obtenir els bytes de l'String
+        byte[] msgBytes = msg.getBytes(StandardCharsets.UTF_8);
         
         // Genera IvParameterSpec
+        IvParameterSpec ivSpec = generaIv();
 
         // Genera hash
+        SecretKeySpec secretKey = generaHash(clau);
 
         // Encrypt
+        Cipher cipher = Cipher.getInstance(FORMAT_AES);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivSpec);
+        byte[] msgXifrat = cipher.doFinal(msgBytes);
 
         // Combinar IV i part xifrat
+        byte[] resultat = new byte[MIDA_IV + msgXifrat.length];
+        System.arraycopy(iv, 0, resultat, 0, MIDA_IV);
+        System.arraycopy(msgXifrat, 0, resultat, MIDA_IV, msgXifrat.length);
 
         // return iv+msgxifrat
+        return resultat;
     }
 
     public static String desxifraAES(byte[] bIvIMsgXifrat, String clau) throws Exception {
@@ -63,7 +74,7 @@ public class AES {
 
         // Desxifrar
 
-        // return String desxifrat
+        // return String desxifrats
     }
     public static void main(String[] args) {
         String msgs[] = {"Lorem ipsum dicet", "Hola Andrés cómo está tu cuñado", "Àgora illa Ôtto"};
