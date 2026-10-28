@@ -1,5 +1,20 @@
 public class Hashes {
 
+    public int npass = 0;
+    private final String charset = "abcdefABCDEF1234567890!";
+
+    public String getSHA512AmbSalt(String pw, String salt) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-512");
+        md.update(salt.getBytes(StandardCharsets.UTF_8));
+        byte[] bytes = md.digest(pw.getBytes(StandardCharsets.UTF_8));
+        
+        HexFormat hex = HexFormat.of();
+        return hex.formatHex(bytes);
+    }
+
+    public String getPBKDF2AmbSalt(String pw, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        int iterations = 65536;
+        int keyLength = 128;
     public static void main(String[] args) throws Exception {
         String salt = "qpoweiruañslkdfjz";
         String pw = "aaabF!";
