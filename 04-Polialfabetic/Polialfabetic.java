@@ -10,6 +10,7 @@ public class Polialfabetic {
     public static void initRandom(int clau) {
         random = new Random(clau);
     }
+
     public static void permutaAlfabet() {
         alfabetPermutat = alfabet.clone();
 
@@ -50,7 +51,6 @@ public class Polialfabetic {
         return resultat.toString();
     }
 
-
     public static String desxifraPoliAlfa(String msgXifrat) {
         StringBuilder resultat = new StringBuilder();
 
@@ -59,7 +59,6 @@ public class Polialfabetic {
             boolean esMinuscula = Character.isLowerCase(lletraXifrada);
             char lletraMajuscula = Character.toUpperCase(lletraXifrada);
             char lletraOriginal = lletraXifrada;
-
 
             permutaAlfabet();
 

@@ -2,7 +2,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Arrays;
-
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -13,84 +12,65 @@ public class AES {
     public static final String FORMAT_AES = "AES/CBC/PKCS5Padding";
 
     public static final int MIDA_IV = 16;
-    public static byte[] iv = new byte[MIDA_IV];
     private static final String CLAU = "LaClauSecretaQueVulguis";
 
-
     private static SecretKeySpec generaHash(String password) throws Exception {
-      byte[] passthroughBytes = password.getBytes(StandardCharsets.UTF_8);
-        
+        byte[] passthroughBytes = password.getBytes(StandardCharsets.UTF_8);
         MessageDigest digest = MessageDigest.getInstance(ALGORISME_HASH);
         byte[] hash = digest.digest(passthroughBytes);
-
         return new SecretKeySpec(hash, ALGORISME_XIFRAT);
     }
 
-    private static IvParameterSpec generaIv() {
+    private static byte[] generaIv() {
+        byte[] iv = new byte[MIDA_IV];
         SecureRandom random = new SecureRandom();
-        
         random.nextBytes(iv);
-        return new IvParameterSpec(iv);
+        return iv;
     }
 
     private static byte[] extreureIv(byte[] bIvIMsgXifrat) {
         return Arrays.copyOfRange(bIvIMsgXifrat, 0, MIDA_IV);
-}
+    }
 
     private static byte[] getBytesXifrats(byte[] bIvIMsgXifrat) {
         return Arrays.copyOfRange(bIvIMsgXifrat, MIDA_IV, bIvIMsgXifrat.length);
-}
+    }
 
     public static byte[] xifraAES(String msg, String clau) throws Exception {
-        // Obtenir els bytes de l'String
         byte[] msgBytes = msg.getBytes(StandardCharsets.UTF_8);
-        
-        // Genera IvParameterSpec
-        IvParameterSpec ivSpec = generaIv();
-
-        // Genera hash
+        byte[] iv = generaIv();
+        IvParameterSpec ivSpec = new IvParameterSpec(iv);
         SecretKeySpec secretKey = generaHash(clau);
 
-        // Encrypt
         Cipher cipher = Cipher.getInstance(FORMAT_AES);
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivSpec);
         byte[] msgXifrat = cipher.doFinal(msgBytes);
 
-        // Combinar IV i part xifrat
         byte[] resultat = new byte[MIDA_IV + msgXifrat.length];
         System.arraycopy(iv, 0, resultat, 0, MIDA_IV);
         System.arraycopy(msgXifrat, 0, resultat, MIDA_IV, msgXifrat.length);
 
-        // return iv+msgxifrat
         return resultat;
     }
 
-
     public static String desxifraAES(byte[] bIvIMsgXifrat, String clau) throws Exception {
-         // Extreure l'IV
         byte[] bytesIv = extreureIv(bIvIMsgXifrat);
-
-        // Extreure la part xifrada
         byte[] msgXifrat = getBytesXifrats(bIvIMsgXifrat);
-
-        // Fer hash de la clau
         SecretKeySpec secretKey = generaHash(clau);
 
-        // Desxifrar
         IvParameterSpec ivSpec = new IvParameterSpec(bytesIv);
         Cipher cipher = Cipher.getInstance(FORMAT_AES);
         cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec);
         byte[] msgDesxifrat = cipher.doFinal(msgXifrat);
 
-        // return String desxifrat
         return new String(msgDesxifrat, StandardCharsets.UTF_8);
     }
+
     public static void main(String[] args) {
         String msgs[] = {"Lorem ipsum dicet", "Hola Andrés cómo está tu cuñado", "Àgora illa Ôtto"};
 
         for (int i = 0; i < msgs.length; i++) {
             String msg = msgs[i];
-
             byte[] bXifrats = null;
             String desxifrat = "";
             try {
@@ -98,9 +78,8 @@ public class AES {
                 desxifrat = desxifraAES(bXifrats, CLAU);
             } catch (Exception e) {
                 System.err.println("Error de xifrat: " + e.getLocalizedMessage());
-
             }
-        
+
             System.out.println("---------------------");
             System.out.println("Msg: " + msg);
             System.out.println("Enc: " + new String(bXifrats, StandardCharsets.UTF_8));
